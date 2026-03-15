@@ -23,8 +23,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt-get update || true
-          apt-get install -y bash git || true
+          apt-get update
+          apt-get install -y sudo bash git
 
       - name: Run integration test
         run: |
