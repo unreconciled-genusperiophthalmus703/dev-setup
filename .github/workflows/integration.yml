@@ -1,0 +1,32 @@
+name: Integration Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        container:
+          - ubuntu:22.04
+          - kalilinux/kali-rolling
+
+    container:
+      image: ${{ matrix.container }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          apt-get update || true
+          apt-get install -y bash git || true
+
+      - name: Run integration test
+        run: |
+          chmod +x tests/integration/ubuntu.test.sh
+          bash tests/integration/ubuntu.test.sh
